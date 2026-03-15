@@ -70,7 +70,7 @@ export function Footer() {
         {/* Couple names */}
         <div className="mb-8">
           <p className="text-lg font-sans italic text-foreground">
-            Nur Aisyah & Muhammad Arif
+            Ain Maisarah & Mohammad Syarafi
           </p>
         </div>
 
@@ -85,7 +85,7 @@ export function Footer() {
 
         {/* Copyright */}
         <p className="text-xs text-muted-foreground/60">
-          #NurAisyahArif2026
+          #MaisarahSyarafi2026
         </p>
       </div>
 

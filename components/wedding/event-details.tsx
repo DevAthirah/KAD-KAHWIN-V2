@@ -27,10 +27,10 @@ export function EventDetails() {
               </span>
             </div>
             <p className="text-xl font-sans font-medium text-foreground">
-              Rabu, 15 April 2026
+              Sabtu, 28 Mac 2026
             </p>
             <p className="text-sm text-muted-foreground mt-1">
-              20 Syawal 1448H
+              08 Syawal 1447H
             </p>
           </div>
 
@@ -43,10 +43,10 @@ export function EventDetails() {
               </span>
             </div>
             <p className="text-xl font-sans font-medium text-foreground">
-              11:00 pagi - 4:00 petang
+              10:00 pagi - 12:00 tengahari
             </p>
             <p className="text-sm text-muted-foreground mt-1">
-              Ketibaan tetamu bermula jam 11:00 pagi
+              Ketibaan tetamu bermula jam 10:00 pagi
             </p>
           </div>
 
@@ -59,12 +59,13 @@ export function EventDetails() {
               </span>
             </div>
             <p className="text-xl font-sans font-medium text-foreground mb-2">
-              Dewan Seri Melati
+              Rumah Perempuan
             </p>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              No. 123, Jalan Bunga Raya,<br />
-              Taman Indah, 43000 Kajang,<br />
-              Selangor Darul Ehsan
+              47, Lengkok Meru Permai 3,<br />
+              Halaman Meru Permai,<br />
+              Bandar Meru Raya,<br />
+              30020 Ipoh, Perak
             </p>
           </div>
         </div>

@@ -51,10 +51,10 @@ export function HeroSection() {
         {/* Save the Date */}
         <div className="bg-card/80 backdrop-blur-sm rounded-2xl px-8 py-6 shadow-sm border border-primary/10">
           <p className="text-sm text-muted-foreground uppercase tracking-widest mb-2">
-            Save the Date
+            Simpan Tarikh
           </p>
           <p className="text-2xl font-sans font-medium text-foreground">
-            15 April 2026
+            28 Mac 2026
           </p>
         </div>
       </div>
