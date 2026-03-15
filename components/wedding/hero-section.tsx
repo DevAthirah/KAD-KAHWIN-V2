@@ -24,7 +24,7 @@ export function HeroSection() {
             Walimatul Urus
           </p>
           <h1 className="text-3xl md:text-4xl font-sans font-semibold text-foreground tracking-wide">
-            Majlis Perkahwinan
+            Majlis Pertunangan
           </h1>
         </div>
 
@@ -40,11 +40,11 @@ export function HeroSection() {
         {/* Couple Names */}
         <div className="space-y-4 mb-10">
           <h2 className="text-4xl md:text-5xl font-sans font-medium text-foreground italic">
-            Nur Aisyah
+            Maisarah
           </h2>
           <p className="text-2xl text-primary font-serif">&</p>
           <h2 className="text-4xl md:text-5xl font-sans font-medium text-foreground italic">
-            Muhammad Arif
+            Syarafi
           </h2>
         </div>
 

@@ -17,7 +17,7 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: 'Majlis Perkahwinan | Wedding Invitation',
+  title: 'Majlis Pertunangan | Maisarah dan Syarafi',
   description: 'You are cordially invited to our wedding celebration',
   icons: {
     icon: '/icon.png',
