@@ -1,46 +1,45 @@
 "use client"
 
-import { useState } from "react"
+// Data fetching with SWR
+import useSWR, { mutate } from "swr"
 import { HeroSection } from "@/components/wedding/hero-section"
 import { EventDetails } from "@/components/wedding/event-details"
 import { QuranQuote } from "@/components/wedding/quran-quote"
 import { Gallery } from "@/components/wedding/gallery"
 import { Guestbook } from "@/components/wedding/guestbook"
-import { GuestMessages } from "@/components/wedding/guest-messages"
+import { GuestMessages, type GuestMessage } from "@/components/wedding/guest-messages"
 import { MapSection } from "@/components/wedding/map-section"
 import { Footer } from "@/components/wedding/footer"
 
-export interface GuestMessage {
-  id: string
-  name: string
-  message: string
-  photo?: string
-  createdAt: Date
-}
+const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
 export default function WeddingInvitation() {
-  const [messages, setMessages] = useState<GuestMessage[]>([
-    {
-      id: "1",
-      name: "Siti Aminah",
-      message: "Tahniah! Semoga berbahagia hingga ke Jannah. Doa terbaik untuk kalian berdua.",
-      createdAt: new Date("2026-03-01"),
-    },
-    {
-      id: "2",
-      name: "Ahmad Razak",
-      message: "Selamat pengantin baru! Semoga kekal hingga ke akhir hayat.",
-      createdAt: new Date("2026-03-05"),
-    },
-  ])
+  const { data: messages = [], isLoading } = useSWR<GuestMessage[]>(
+    "/api/messages",
+    fetcher
+  )
 
-  const handleAddMessage = (newMessage: Omit<GuestMessage, "id" | "createdAt">) => {
-    const message: GuestMessage = {
-      ...newMessage,
-      id: Date.now().toString(),
-      createdAt: new Date(),
+  const handleAddMessage = async (newMessage: {
+    name: string
+    message: string
+    attendance: string
+    guest_count: number
+    photo_url?: string
+  }) => {
+    const response = await fetch("/api/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newMessage),
+    })
+
+    if (!response.ok) {
+      throw new Error("Failed to submit message")
     }
-    setMessages((prev) => [message, ...prev])
+
+    // Revalidate the messages list
+    mutate("/api/messages")
   }
 
   return (
@@ -50,7 +49,16 @@ export default function WeddingInvitation() {
       <QuranQuote />
       <Gallery />
       <Guestbook onSubmit={handleAddMessage} />
-      <GuestMessages messages={messages} />
+      {isLoading ? (
+        <section className="px-6 py-8 bg-secondary/50">
+          <div className="max-w-md mx-auto text-center">
+            <div className="w-6 h-6 border-2 border-primary/30 border-t-primary rounded-full animate-spin mx-auto" />
+            <p className="text-sm text-muted-foreground mt-2">Memuatkan ucapan...</p>
+          </div>
+        </section>
+      ) : (
+        <GuestMessages messages={messages} />
+      )}
       <MapSection />
       <Footer />
     </main>

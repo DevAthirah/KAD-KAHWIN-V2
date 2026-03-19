@@ -1,20 +1,27 @@
 "use client"
 
 import { useState, useRef } from "react"
-import { Upload, Send, X } from "lucide-react"
+import { Upload, Send, X, Users } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import type { GuestMessage } from "@/app/page"
 import Image from "next/image"
 
 interface GuestbookProps {
-  onSubmit: (message: Omit<GuestMessage, "id" | "createdAt">) => void
+  onSubmit: (message: {
+    name: string
+    message: string
+    attendance: string
+    guest_count: number
+    photo_url?: string
+  }) => Promise<void>
 }
 
 export function Guestbook({ onSubmit }: GuestbookProps) {
   const [name, setName] = useState("")
   const [message, setMessage] = useState("")
+  const [attendance, setAttendance] = useState<"hadir" | "tidak_hadir">("hadir")
+  const [guestCount, setGuestCount] = useState(1)
   const [photo, setPhoto] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -36,20 +43,26 @@ export function Guestbook({ onSubmit }: GuestbookProps) {
 
     setIsSubmitting(true)
     
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    
-    onSubmit({
-      name: name.trim(),
-      message: message.trim(),
-      photo: photo || undefined,
-    })
+    try {
+      await onSubmit({
+        name: name.trim(),
+        message: message.trim(),
+        attendance,
+        guest_count: guestCount,
+        photo_url: photo || undefined,
+      })
 
-    // Reset form
-    setName("")
-    setMessage("")
-    setPhoto(null)
-    setIsSubmitting(false)
+      // Reset form
+      setName("")
+      setMessage("")
+      setAttendance("hadir")
+      setGuestCount(1)
+      setPhoto(null)
+    } catch (error) {
+      console.error("Failed to submit:", error)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const removePhoto = () => {
@@ -60,15 +73,15 @@ export function Guestbook({ onSubmit }: GuestbookProps) {
   }
 
   return (
-    <section className="px-6 py-16 bg-gradient-to-b from-background to-pink-50/50">
+    <section className="px-6 py-16 bg-gradient-to-b from-background to-secondary/50">
       <div className="max-w-md mx-auto">
         {/* Section title */}
         <div className="text-center mb-8">
           <h2 className="text-2xl font-sans font-medium text-foreground mb-2">
-            Ucapan & Doa
+            Ucapan & RSVP
           </h2>
           <p className="text-sm text-muted-foreground">
-            Kirimkan ucapan dan doa untuk pengantin
+            Kirimkan ucapan dan sahkan kehadiran anda
           </p>
         </div>
 
@@ -102,8 +115,69 @@ export function Guestbook({ onSubmit }: GuestbookProps) {
             />
           </div>
 
+          {/* Attendance selection */}
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-foreground">
+              Kehadiran
+            </label>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={() => setAttendance("hadir")}
+                className={`flex-1 py-3 px-4 rounded-xl border-2 transition-all ${
+                  attendance === "hadir"
+                    ? "border-primary bg-primary/10 text-foreground"
+                    : "border-primary/20 bg-card text-muted-foreground hover:border-primary/40"
+                }`}
+              >
+                <span className="text-sm font-medium">Hadir</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setAttendance("tidak_hadir")}
+                className={`flex-1 py-3 px-4 rounded-xl border-2 transition-all ${
+                  attendance === "tidak_hadir"
+                    ? "border-primary bg-primary/10 text-foreground"
+                    : "border-primary/20 bg-card text-muted-foreground hover:border-primary/40"
+                }`}
+              >
+                <span className="text-sm font-medium">Tidak Hadir</span>
+              </button>
+            </div>
+          </div>
+
+          {/* Guest count - only show if attending */}
+          {attendance === "hadir" && (
+            <div className="space-y-2 text-center">
+              <label className="text-sm font-medium text-foreground flex items-center justify-center gap-2">
+                <Users className="w-4 h-4" />
+                Jumlah Tetamu
+              </label>
+              <div className="flex items-center justify-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setGuestCount(Math.max(1, guestCount - 1))}
+                  className="w-10 h-10 rounded-full border-2 border-primary/20 bg-card flex items-center justify-center text-foreground hover:border-primary/40 transition-colors"
+                >
+                  -
+                </button>
+                <span className="text-lg font-medium text-foreground w-8 text-center">
+                  {guestCount}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setGuestCount(Math.min(10, guestCount + 1))}
+                  className="w-10 h-10 rounded-full border-2 border-primary/20 bg-card flex items-center justify-center text-foreground hover:border-primary/40 transition-colors"
+                >
+                  +
+                </button>
+                {/*<span className="text-sm text-muted-foreground">orang</span>*/}
+              </div>
+            </div>
+          )}
+
           {/* Photo upload */}
-          <div>
+          <div className="flex justify-center">
             <input
               ref={fileInputRef}
               type="file"
@@ -126,7 +200,7 @@ export function Guestbook({ onSubmit }: GuestbookProps) {
                 <button
                   type="button"
                   onClick={removePhoto}
-                  className="absolute -top-2 -right-2 w-6 h-6 bg-destructive text-destructive-foreground rounded-full flex items-center justify-center shadow-sm"
+                  className="absolute -top-2 -right-2 w-6 h-6 bg-destructive text-card rounded-full flex items-center justify-center shadow-sm"
                 >
                   <X className="w-3 h-3" />
                 </button>
