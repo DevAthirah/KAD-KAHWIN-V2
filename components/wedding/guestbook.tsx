@@ -78,7 +78,7 @@ export function Guestbook({ onSubmit }: GuestbookProps) {
         {/* Section title */}
         <div className="text-center mb-8">
           <h2 className="text-2xl font-sans font-medium text-foreground mb-2">
-            Ucapan & RSVP
+            Ucapan
           </h2>
           <p className="text-sm text-muted-foreground">
             Kirimkan ucapan dan sahkan kehadiran anda
