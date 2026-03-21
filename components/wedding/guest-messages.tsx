@@ -62,65 +62,78 @@ export function GuestMessages({ messages }: GuestMessagesProps) {
 
         {/* Messages container - scrollable */}
         <div className="max-h-[400px] overflow-y-auto space-y-4 pr-2 scrollbar-thin">
-          {messages.map((msg) => (
-            <div
-              key={msg.id}
-              className="bg-card rounded-xl p-4 border border-primary/10 shadow-sm"
-            >
-              <div className="flex items-start gap-3">
-                {/* Avatar */}
-                <div className="flex-shrink-0">
-                  {msg.photo_url ? (
-                    <div className="w-10 h-10 rounded-full overflow-hidden relative">
-                      <Image
-                        src={msg.photo_url}
-                        alt={msg.name}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  ) : (
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <User className="w-5 h-5 text-primary/60" />
-                    </div>
-                  )}
-                </div>
+  {messages.map((msg) => (
+    <div
+      key={msg.id}
+      className="bg-card rounded-xl p-4 border border-primary/10 shadow-sm"
+    >
+      <div className="flex items-start gap-3">
+        
+        {/* Avatar (always icon now) */}
+        <div className="flex-shrink-0">
+          <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+            <User className="w-5 h-5 text-primary/60" />
+          </div>
+        </div>
 
-                {/* Content */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between gap-2 mb-1">
-                    <div className="flex items-center gap-2">
-                      <h4 className="font-sans font-medium text-foreground text-sm truncate">
-                        {msg.name}
-                      </h4>
-                      {/* Attendance badge */}
-                      {msg.attendance === "hadir" ? (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-100 text-green-700 rounded-full text-xs">
-                          <Check className="w-3 h-3" />
-                          Hadir
-                          {msg.guest_count > 1 && (
-                            <span className="ml-0.5">({msg.guest_count})</span>
-                          )}
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-red-100 text-red-700 rounded-full text-xs">
-                          <X className="w-3 h-3" />
-                          Tidak Hadir
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-1">
-                    {msg.message}
-                  </p>
-                  <span className="text-xs text-muted-foreground/70">
-                    {formatDate(msg.created_at)}
-                  </span>
-                </div>
+        {/* Content */}
+        <div className="flex-1 min-w-0">
+          
+          {/* Name + Attendance */}
+          <div className="flex items-center justify-between gap-2 mb-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h4 className="font-sans font-medium text-foreground text-sm truncate">
+                {msg.name}
+              </h4>
+
+              {/* Attendance badge */}
+              {msg.attendance === "hadir" ? (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-green-100 text-green-700 rounded-full text-xs">
+                  <Check className="w-3 h-3" />
+                  Hadir
+                  {msg.guest_count > 1 && (
+                    <span className="ml-0.5">({msg.guest_count})</span>
+                  )}
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-red-100 text-red-700 rounded-full text-xs">
+                  <X className="w-3 h-3" />
+                  Tidak Hadir
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Message */}
+          {msg.message && (
+            <p className="text-sm text-muted-foreground leading-relaxed mb-2">
+              {msg.message}
+            </p>
+          )}
+
+          {/* BIG Uploaded Photo */}
+          {msg.photo_url && (
+            <div className="mt-2">
+              <div className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border border-primary/10">
+                <Image
+                  src={msg.photo_url}
+                  alt="Guest photo"
+                  fill
+                  className="object-cover"
+                />
               </div>
             </div>
-          ))}
+          )}
+
+          {/* Date */}
+          <span className="block text-xs text-muted-foreground/70 mt-2">
+            {formatDate(msg.created_at)}
+          </span>
         </div>
+      </div>
+    </div>
+  ))}
+</div>
       </div>
     </section>
   )
