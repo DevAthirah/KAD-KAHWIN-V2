@@ -69,7 +69,7 @@ export function GuestMessages({ messages }: GuestMessagesProps) {
     >
       <div className="flex items-start gap-3">
         
-        {/* Avatar (always icon now) */}
+        {/* Avatar  */}
         <div className="flex-shrink-0">
           <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
             <User className="w-5 h-5 text-primary/60" />
