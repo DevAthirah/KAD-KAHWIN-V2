@@ -85,7 +85,7 @@ export function Footer() {
 
         {/* Copyright */}
         <p className="text-xs text-muted-foreground/60">
-          #MaisarahSyarafi2026
+          © 2026 MAFATech. All rights reserved.
         </p>
       </div>
 

@@ -74,7 +74,7 @@ export function Guestbook({ onSubmit }: GuestbookProps) {
 
   return (
     <section className="px-6 py-16 bg-gradient-to-b from-background to-secondary/50">
-      <div className="max-w-md mx-auto">
+      <div className="max-w-md mx-auto" id="ucapan-form">
         {/* Section title */}
         <div className="text-center mb-8">
           <h2 className="text-2xl font-sans font-medium text-foreground mb-2">

@@ -1,6 +1,16 @@
+"use client"
+
 import { FloralDecoration } from "./floral-decoration"
+import { Button } from "@/components/ui/button"
 
 export function HeroSection() {
+  const scrollToForm = (id: string) => {
+    const element = document.getElementById(id)
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" })
+    }
+  }
+
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-6 py-16 overflow-hidden">
       {/* Background gradient */}
@@ -57,6 +67,24 @@ export function HeroSection() {
             28 Mac 2026
           </p>
         </div>
+
+        {/* Ucapan button */}
+        <div className="space-y-2 mt-4">
+          <Button
+            onClick={() => scrollToForm("ucapan-form")}
+            className="w-full h-12 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
+          >
+            Isi Ucapan 💌
+          </Button>
+
+          {/* Mesej Tetamu button */}
+          <Button
+            onClick={() => scrollToForm("ucapan-tetamu")}
+            className="w-full h-12 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-medium"
+          >
+            Lihat Ucapan Tetamu 📖
+          </Button>
+        </div>
       </div>
 
       {/* Bottom floral decoration */}
@@ -64,12 +92,12 @@ export function HeroSection() {
         <FloralDecoration position="bottom" />
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
         <svg className="w-6 h-6 text-primary/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
-      </div>
+      </div>*/}
     </section>
   )
 }
